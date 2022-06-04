@@ -1,0 +1,2 @@
+team1:ctf:98ff91bc4d782b62a7ac2d4e408bb1eb
+team2:ctf:469a9d072f328a52e10eaca6787c3616

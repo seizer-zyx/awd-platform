@@ -1,0 +1,42 @@
+[
+    {
+        "ChallengeID": 1,
+        "TeamID": 1,
+        "IP": "127.0.0.1",
+        "Port": "8801",
+        "SSHPort": "2201",
+        "SSHUser": "root",
+        "SSHPassword": "9b453358745151482031a49ac2f95bb5",
+        "Description": ""
+    },
+    {
+        "ChallengeID": 1,
+        "TeamID": 2,
+        "IP": "127.0.0.1",
+        "Port": "8802",
+        "SSHPort": "2202",
+        "SSHUser": "root",
+        "SSHPassword": "9b453358745151482031a49ac2f95bb5",
+        "Description": ""
+    },
+    {
+        "ChallengeID": 1,
+        "TeamID": 3,
+        "IP": "127.0.0.1",
+        "Port": "8803",
+        "SSHPort": "2203",
+        "SSHUser": "root",
+        "SSHPassword": "9b453358745151482031a49ac2f95bb5",
+        "Description": ""
+    },
+    {
+        "ChallengeID": 1,
+        "TeamID": 4,
+        "IP": "127.0.0.1",
+        "Port": "8804",
+        "SSHPort": "2204",
+        "SSHUser": "root",
+        "SSHPassword": "9b453358745151482031a49ac2f95bb5",
+        "Description": ""
+    }
+]

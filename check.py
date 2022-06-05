@@ -1,4 +1,3 @@
-
 import time
 import requests
 
@@ -11,8 +10,8 @@ headers = {
 
 hosts = open('./host.lists', 'r').readlines()
 user_id = [host.split(':')[0] for host in hosts]
-host = hosts[0].split(':')[1]
-ports = [host.split(' ')[1].strip() for port in hosts]
+host = hosts[0].split(':')[1].split(' ')[0]
+ports = [port.split(' ')[1].strip() for port in hosts]
 
 targets = list(zip(user_id, ports))
 
@@ -20,19 +19,19 @@ targets = list(zip(user_id, ports))
 def http(method, host, port, url, data, headers):
     req = requests
 
-    url = f"http://{host}:{port}/{url}"
+    url = f"http://{host}:{port}/{url[1:] if url[0] == '/' else url}"
+    print(url)
 
     if method == 'post' or method == 'POST':
         headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        res = req.post(url, data, headers=headers)
+        res = req.post(url, data, headers=headers, allow_redirects=False)
     else:
         res = req.get(url, headers=headers)
-    if res.headers['set-cookie']:
-        headers['Cookie'] = res.headers['set-cookie']
+    if 'set-cookie' in res.headers:
+        # headers['Cookie'] = res.headers['set-cookie']
         pass
-    if res.headers['Location']:
+    if 'Location' in res.headers:
         print("Your 302 direct is: " + res.headers['Location'])
-
     return res
 
 
@@ -41,43 +40,43 @@ class check():
         print("checking user_id: " + target[0])
 
     def index_check(self):
-        res = http('get', host, target[1], '/web/?time=%s', '', headers)
-        if '网校课程' in res:
+        res = http('get', host, target[1],
+                   '/index.php?mod=mobile&act=public&do=index&beid=1', '',
+                   headers).text
+        if '登录' in res:
             return True
         if debug:
             print("[fail!] index_fail")
-        return False
+            return False
 
     def test_check(self):
-        res = http('get', host, target[1], '/web/teacher', '', headers)
-        if 'teacher' in res:
+        res = http('get', host, target[1], '/admin.php', '', headers).text
+        if '登录' in res:
             return True
         if debug:
             print("[fail!] test_fail")
-        return False
+            return False
 
     def login_check(self):
         headers['Cookie'] = 'PHPSESSID=ujg0tpds1u9d23b969f2duj5c7;'
-        headers['X-Requested-With'] = 'XMLHttpRequest'
-        res = http('post', host, target[1], '/admin/login/index.html',
-                   'username=admin&password=admin&verify=7480', headers)
-        if '"status":1' in res:
+        res = http('post', host, target[1],
+                   '/index.php?mod=mobile&act=public&do=login&beid=1',
+                   'username=admin&password=admin&submit=1', headers)
+
+        if res.status_code == 302:
             return True
         if debug:
             print("[fail!] login_fail")
             return False
 
     def admin_check(self):
-        data = 'eval(666)'
         headers['Cookie'] = 'PHPSESSID=ujg0tpds1u9d23b969f2duj5c7;'
-        res = http('get', host, target[1], '/admin/tools/database?type=export',
-                   data, headers)
-        http('get', host, target[1], '/admin/login/loginout.html', '', headers)
-        if 'qq3479015851_article_type' in res:
+        res = http('get', host, target[1], '/index.php?mod=site&act=manager&do=database&beid=1', '', headers).text
+        if '备份' in res:
             return True
         if debug:
             print("[fail!] admin_fail")
-        return False
+            return False
 
 
 def server_check():
@@ -87,7 +86,9 @@ def server_check():
             return False
         if not a.test_check():
             return False
-        if not a.test_check_2():
+        if not a.login_check():
+            return False
+        if not a.admin_check():
             return False
         return True
     except Exception as e:
@@ -96,7 +97,8 @@ def server_check():
 
 
 # print(targets)
-game_round = 0
+# print(host)
+game_round = 1
 while True:
 
     print(

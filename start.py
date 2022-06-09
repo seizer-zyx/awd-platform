@@ -2,16 +2,15 @@
 
 import sys
 import os
-import time
 
 dir = sys.argv[1]
 teamno = int(sys.argv[2])
 check_time = 240
 
 
-def start_check():
-    os.system('python3 check.py')
-    print('[*] start check')
+def start_generate_target():
+    os.system('python3 target.py')
+    print('[*] finish generate target.json')
 
 
 def start_team(teamno):
@@ -23,5 +22,4 @@ def start_team(teamno):
 if __name__ == '__main__':
     for i in range(teamno):
         start_team(i + 1)
-    time.sleep(check_time)
-    start_check()
+    start_generate_target()

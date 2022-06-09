@@ -25,9 +25,9 @@ python3 batch.py baijiacms 4 1
 或者使用以下命令来指定镜像：
 
 ```bash
-python3 batch.py 环境目录 team_num port image_name
+python3 batch.py 环境目录 team_num target_id image_name port
 example:
-python3 batch.py baijiacms 4 80 web14.04
+python3 batch.py baijiacms 4 1 web14.04 80
 ```
 
 开启环境：

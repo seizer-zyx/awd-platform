@@ -61,7 +61,7 @@ class check():
         headers['Cookie'] = 'PHPSESSID=ujg0tpds1u9d23b969f2duj5c7;'
         res = http('post', host, target[1],
                    '/index.php?mod=mobile&act=public&do=login&beid=1',
-                   'username=admin&password=admin&submit=1', headers)
+                   'username=admin&password=admin666&submit=1', headers)
 
         if res.status_code == 302:
             return True
@@ -71,7 +71,9 @@ class check():
 
     def admin_check(self):
         headers['Cookie'] = 'PHPSESSID=ujg0tpds1u9d23b969f2duj5c7;'
-        res = http('get', host, target[1], '/index.php?mod=site&act=manager&do=database&beid=1', '', headers).text
+        res = http('get', host, target[1],
+                   '/index.php?mod=site&act=manager&do=database&beid=1', '',
+                   headers).text
         if '备份' in res:
             return True
         if debug:
@@ -96,8 +98,26 @@ def server_check():
         return False
 
 
+def check_down(ID):
+    TOKEN = 'CHECK_MANAGER_TOKEN_HERE'  # Check Token
+    GameBoxID = ID  # 靶机 ID
+
+    resp = requests.post('http://localhost:19999/api/manager/checkDown',
+                         json={
+                             'GameBoxID': GameBoxID
+                         },
+                         headers={
+                             'Authorization': TOKEN
+                         }).json()
+
+    if resp['error'] != 0:
+        print(resp['msg'])
+
+
 # print(targets)
 # print(host)
+team_num = len(targets)
+# print(team_num)
 game_round = 1
 while True:
 
@@ -105,13 +125,15 @@ while True:
         "--------------------------- round %d -------------------------------"
         % game_round)
     for target in targets:
+        target_num = (int(target[1])-8800) + 1
+        ID = target_num * team_num + (int(target[1]) - 8800) % 10
         print(
             "---------------------------------------------------------------")
         if server_check():
             print("team%s: %s:%s seems ok" % (target[0], host, target[1]))
-            # scores.append("1")
+            # check_down(ID)
         else:
             print("team%s: %s:%s seems down" % (target[0], host, target[1]))
-            # scores.append("-1")
+            check_down(ID)
     game_round += 1
     time.sleep(sleep_time)

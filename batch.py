@@ -56,14 +56,14 @@ def main():
     team_number = int(sys.argv[2])
     target_id = int(sys.argv[3])
     if len(sys.argv) == 4:
+        my_image = 'se1zer/web_env'
         my_port = 80
-        my_image = 'se1zer/web_env'
     elif len(sys.argv) == 5:
-        my_port = int(sys.argv[4])
-        my_image = 'se1zer/web_env'
+        my_image = int(sys.argv[4])
+        my_port = 80
     elif len(sys.argv) == 6:
-        my_port = int(sys.argv[4])
-        my_image = sys.argv[5]
+        my_image = sys.argv[4]
+        my_port = int(sys.argv[5])
 
     open('./pass.txt', 'w').write("")
 

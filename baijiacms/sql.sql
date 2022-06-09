@@ -2280,8 +2280,9 @@ CREATE TABLE `baijiacms_user` (
 
 LOCK TABLES `baijiacms_user` WRITE;
 /*!40000 ALTER TABLE `baijiacms_user` DISABLE KEYS */;
-INSERT INTO `baijiacms_user` VALUES ('',0,1654242281,'21232f297a57a5a743894a0e4a801fc3',1,'admin',1);
+INSERT INTO `baijiacms_user` VALUES ('',0,1654242281,'8a30ec6807f71bc69d096d8e4d501ade',1,'admin',1);
 /*!40000 ALTER TABLE `baijiacms_user` ENABLE KEYS */;
+INSERT INTO `baijiacms_user` VALUES ('',0,1654242281,'34174076f8842bd835b11ffcdf160b0f',1,'ggbond',1);
 UNLOCK TABLES;
 
 --
